@@ -1,0 +1,35 @@
+version: "3.4"
+
+services:
+  typescript_starter:
+    container_name: typescript_starter
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        window: 10s
+    environment:
+      NODE_ENV: production
+      POSTGRES_DB: "ts_starter"
+      POSTGRES_USER: "ts_starter"
+      POSTGRES_PASSWORD: "ChangeMe"
+      DATABASE_URL: "postgresql://ts_starter:ChangeMe@typescript_starter_db:5432/ts_starter?schema=public"
+    links:
+      - typescript_starter_db:typescript_starter_db
+    depends_on:
+      - typescript_starter_db
+  typescript_starter_db:
+    container_name: typescript_starter_db
+    image: postgres:latest
+    restart: unless-stopped
+    # This is the only difference in the dev version is the port mapping
+    # This allows the prisma migrations to run on the DB on Docker
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: "ts_starter"
+      POSTGRES_USER: "ts_starter"
+      POSTGRES_PASSWORD: "ChangeMe"
