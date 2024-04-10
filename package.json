@@ -10,10 +10,10 @@
     "start:prod": "node dist/index.js"
   },
   "devDependencies": {
-    "prisma": "^5.7.1",
-    "typescript": "^5.3.3"
+    "prisma": "^5.12.1",
+    "typescript": "^5.4.4"
   },
   "dependencies": {
-    "@prisma/client": "^5.7.1"
+    "@prisma/client": "^5.12.1"
   }
 }
